@@ -1,0 +1,346 @@
+HTTP/1.1 200 OK
+server: nginx/1.18.0 (Ubuntu)
+date: Thu, 04 Jan 2024 19:09:48 GMT
+content-type: application/json; charset=utf-8
+Content-Length: 10032
+access-control-allow-origin: *
+content-security-policy: default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+cross-origin-embedder-policy: require-corp
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+x-dns-prefetch-control: off
+expect-ct: max-age=0
+x-frame-options: SAMEORIGIN
+strict-transport-security: max-age=15552000; includeSubDomains
+x-download-options: noopen
+x-content-type-options: nosniff
+origin-agent-cluster: ?1
+x-permitted-cross-domain-policies: none
+referrer-policy: no-referrer
+x-xss-protection: 0
+etag: W/"2730-mM+fZfveGQg9KmcDmIZO00rEwXA"
+via: 1.1 google
+Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+Connection: close
+
+{
+  "activities": [
+    {
+      "id": "ffd1734c-ce4c-485b-ae9e-1bf55ca09fcb",
+      "selection_time": "2024-01-04T16:25:32.319Z",
+      "prompt": "Wants to get out of the country really bad",
+      "image_url": null,
+      "emoji": "🛩",
+      "question_id": 1667,
+      "update_datetime": "2024-01-04T21:55:32.320",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "bachelors1"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "e1ad6393-650b-41b1-bc41-6a4f7f53dd88",
+      "selection_time": "2024-01-04T16:10:23.432Z",
+      "prompt": "Shamelessly double/triple texts and still doesn't get a reply",
+      "image_url": null,
+      "emoji": "🤪",
+      "question_id": 247,
+      "update_datetime": "2024-01-04T21:40:23.432",
+      "attempter": {
+        "gender": "female",
+        "grade_status": "grade12"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "dcf5b5c7-0bfe-40d8-a993-a6cd6f8d9ada",
+      "selection_time": "2024-01-04T14:04:02.332Z",
+      "prompt": "I would write a book of poems for you",
+      "image_url": null,
+      "emoji": "😬",
+      "question_id": 2575,
+      "update_datetime": "2024-01-04T19:34:02.332",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "uniothers"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "a4d3c207-275c-44b3-ad0f-c8c7f2a7b47e",
+      "selection_time": "2024-01-04T13:47:45.560Z",
+      "prompt": "Most likely to be listening to BTS right now",
+      "image_url": null,
+      "emoji": "🎶",
+      "question_id": 2096,
+      "update_datetime": "2024-01-04T19:17:45.561",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "bachelors1"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "20b7dd52-93d7-4585-9dfe-9399bf90c228",
+      "selection_time": "2024-01-04T09:42:49.237Z",
+      "prompt": "If you see this you are sexy",
+      "image_url": null,
+      "emoji": "😉",
+      "question_id": 2683,
+      "update_datetime": "2024-01-04T15:12:49.237",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "grade9"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "4d749d21-f552-4744-9246-d2fc153f4d52",
+      "selection_time": "2024-01-04T07:47:27.432Z",
+      "prompt": "The entire squad's lawyer, always ready to throw hands",
+      "image_url": null,
+      "emoji": "🥊",
+      "question_id": 239,
+      "update_datetime": "2024-01-04T13:17:27.432",
+      "attempter": {
+        "gender": "female",
+        "grade_status": "bachelors3"
+      },
+      "selected_user": {
+        "id": "a749fa31-1be0-45b8-b070-a1bc7478282f",
+        "first_name": "KETAN",
+        "last_name": "KUMAR",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a749fa31-1be0-45b8-b070-a1bc7478282fYQZMAOIMIEHUTXKXSCIM?ik-t=3411296376&ik-s=f733307eebfde066d9df7fd66b5d3c9200ccf33b",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "0f81cc9d-3088-446f-aaa1-a3e4d9df2520",
+      "selection_time": "2024-01-04T04:20:52.970Z",
+      "prompt": "They realise too late after effing up",
+      "image_url": null,
+      "emoji": "😏",
+      "question_id": 1491,
+      "update_datetime": "2024-01-04T09:50:52.971",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "bachelors1"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "409c1c58-ebfd-4961-9843-1cdde80f01a7",
+      "selection_time": "2024-01-03T18:12:59.603Z",
+      "prompt": "Material gworl ",
+      "image_url": null,
+      "emoji": "😎",
+      "question_id": 2058,
+      "update_datetime": "2024-01-03T23:42:59.603",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "uniothers"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "f1cce3f5-6f31-480d-b592-f71ef36fbf6d",
+      "selection_time": "2024-01-03T15:39:42.115Z",
+      "prompt": "Stays away from the politics of the school/college",
+      "image_url": null,
+      "emoji": "😌",
+      "question_id": 2050,
+      "update_datetime": "2024-01-03T21:09:42.116",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "bachelors3"
+      },
+      "selected_user": {
+        "id": "27cb3e54-7bb9-467b-9f7b-0eb7c7054422",
+        "first_name": "Ashish",
+        "last_name": "Sahu",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/27cb3e54-7bb9-467b-9f7b-0eb7c7054422NEJNEVLAXPYRSZQQNIFW?ik-t=3411296376&ik-s=372551ab5533d5b3c7940929e2df17dbb728d88b",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "b188cb02-cbee-4e15-8e4a-5a5f29786416",
+      "selection_time": "2024-01-03T15:17:35.016Z",
+      "prompt": "Sings karaoke like a pro",
+      "image_url": null,
+      "emoji": "🎤",
+      "question_id": 174,
+      "update_datetime": "2024-01-03T20:47:35.016",
+      "attempter": {
+        "gender": "female",
+        "grade_status": "grade9"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "bebd7633-3fcf-4902-b644-7191e01396b6",
+      "selection_time": "2024-01-03T14:31:44.569Z",
+      "prompt": "They make my soul happy",
+      "image_url": null,
+      "emoji": "😌",
+      "question_id": 2383,
+      "update_datetime": "2024-01-03T20:01:44.570",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "bachelors3"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "f67a54a9-9115-40aa-9567-a463ef08ac9b",
+      "selection_time": "2024-01-03T13:15:51.910Z",
+      "prompt": "Has contagious energy",
+      "image_url": null,
+      "emoji": "😜",
+      "question_id": 368,
+      "update_datetime": "2024-01-03T18:45:51.911",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "bachelors2"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "1a3e82e4-1e5c-41d8-8560-73265c7844d0",
+      "selection_time": "2024-01-03T06:04:00.925Z",
+      "prompt": "I like you because I can be myself around you",
+      "image_url": null,
+      "emoji": "😌",
+      "question_id": 2692,
+      "update_datetime": "2024-01-03T11:34:00.925",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "bachelors2"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "de68740e-4f6b-4d32-b603-fdcdb03873e4",
+      "selection_time": "2024-01-03T02:50:09.542Z",
+      "prompt": "Trouble follows them wherever they go",
+      "image_url": null,
+      "emoji": "🥲",
+      "question_id": 2149,
+      "update_datetime": "2024-01-03T08:20:09.542",
+      "attempter": {
+        "gender": "female",
+        "grade_status": "grade10"
+      },
+      "selected_user": {
+        "id": "a9e8adb5-fdd9-462c-b13c-ec5db278fdc3",
+        "first_name": "Tanisha",
+        "last_name": "Dutta",
+        "profile_pic": "https://ik.imagekit.io/slickapp/csm/tr:h-100,w-100,q-70,dpr-2,fo-auto,f-webp,pr-true/rachit_img_compress/a9e8adb5-fdd9-462c-b13c-ec5db278fdc3VJJJXBOFKLMLFZSNSKHV?ik-t=3411296376&ik-s=f26616b3e50cf1cbb4aed2e3a362f2d361a52430",
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    },
+    {
+      "id": "56282b21-10db-433d-908c-c386f42367ce",
+      "selection_time": "2024-01-02T20:21:01.056Z",
+      "prompt": "Their shoe collection is wonderful",
+      "image_url": null,
+      "emoji": "👟",
+      "question_id": 690,
+      "update_datetime": "2024-01-03T01:51:01.056",
+      "attempter": {
+        "gender": "male",
+        "grade_status": "bachelors3"
+      },
+      "selected_user": {
+        "id": "56dbff90-876d-48c2-b100-db2389d28fe3",
+        "first_name": "Saheb",
+        "last_name": "Giri",
+        "profile_pic": null,
+        "verified_jiffs_count": null,
+        "blue_tick": null
+      }
+    }
+  ],
+  "count": 0,
+  "items_per_page": 15
+}
