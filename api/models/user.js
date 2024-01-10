@@ -2,8 +2,6 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
 
-import toJSON from './plugins/toJSON.plugin.js';
-
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -27,8 +25,8 @@ const userSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
-    dateOfBirth: {
-      type: Date,
+    age: {
+      type: Number,
     },
     bio: {
       type: String,
@@ -42,11 +40,12 @@ const userSchema = mongoose.Schema(
       type: String,
       enum: ['male', 'female', 'non-binary', 'other'],
     },
+    phaseOfLife: {
+      type: String
+    },
     password: {
       type: String,
-      required: true,
       trim: true,
-      private: true, // used by the toJSON plugin
     },
   },
   {
@@ -54,7 +53,6 @@ const userSchema = mongoose.Schema(
   }
 );
 
-userSchema.plugin(toJSON);
 
 userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });

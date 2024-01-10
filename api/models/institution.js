@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const institutionSchema = mongoose.Schema(
   {
@@ -31,6 +31,6 @@ const institutionSchema = mongoose.Schema(
 /**
  * @typedef Institution
  */
-const Institution = mongoose.model('Institution', institutionSchema);
+const Institution = mongoose.model("Institution", institutionSchema);
 
-module.exports = Institution;
+export default Institution;

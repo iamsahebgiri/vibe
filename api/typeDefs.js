@@ -27,9 +27,10 @@ const typeDefs = `#graphql
     name: String
     email: String
     avatar: String
-    dateOfBirth: Date
+    age: Number
     bio: String
     gender: String
+    phaseOfLife: String
     
     createdAt: Date
     updatedAt: Date
@@ -52,6 +53,7 @@ const typeDefs = `#graphql
   type Mutation {
     register(name: String!, email: String!, password: String!): AuthData
     login(email: String!, password: String!): AuthData
+    loginWithGoogle(idToken: String!): AuthData
 
     updateUser(id: ID!, name: String, avatar: String, dateOfBirth: Date, bio: String, gender: String): User
     deleteUser(id: ID!): User

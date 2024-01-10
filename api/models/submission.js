@@ -1,35 +1,35 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const submissionSchema = mongoose.Schema(
   {
     question: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Question',
+      ref: "Question",
       required: true,
     },
     from: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     to: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     option1: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     option2: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     option3: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
   },
@@ -41,6 +41,6 @@ const submissionSchema = mongoose.Schema(
 /**
  * @typedef Submission
  */
-const Submission = mongoose.model('Submission', submissionSchema);
+const Submission = mongoose.model("Submission", submissionSchema);
 
-module.exports = Submission;
+export default Submission;
