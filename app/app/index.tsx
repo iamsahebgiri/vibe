@@ -4,7 +4,6 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import {
   GoogleSignin,
-  GoogleSigninButton,
   statusCodes,
 } from "@react-native-google-signin/google-signin";
 
@@ -17,12 +16,11 @@ GoogleSignin.configure({
   scopes: [
     "https://www.googleapis.com/auth/userinfo.profile",
     "https://www.googleapis.com/auth/userinfo.email",
-    "https://www.googleapis.com/auth/user.birthday.read",
-    "https://www.googleapis.com/auth/user.gender.read",
+    // "https://www.googleapis.com/auth/user.birthday.read",
+    // "https://www.googleapis.com/auth/user.gender.read",
   ],
   webClientId:
     "339340436624-00b8ig04mki74l5mun14250pp27cet93.apps.googleusercontent.com",
-  offlineAccess: true,
 });
 
 export default function IndexScreen() {
