@@ -70,7 +70,10 @@ const OnboardingPhaseOfLife = () => {
             flexDirection: "row-reverse",
           }}
           icon="arrow-right"
-          onPress={() => console.log({ password, gender, age, phaseOfLife })}
+          onPress={() => {
+            console.log({ password, gender, age, phaseOfLife });
+            router.push("/home")
+          }}
         >
           Submit
         </Button>

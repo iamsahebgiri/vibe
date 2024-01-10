@@ -9,6 +9,12 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { PaperProvider } from "react-native-paper";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  gql,
+} from "@apollo/client";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -47,34 +53,44 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+const client = new ApolloClient({
+  uri: "https://flyby-router-demo.herokuapp.com/",
+  cache: new InMemoryCache(),
+});
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <PaperProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack
-          screenOptions={{
-            animation: "slide_from_right",
-          }}
+    <ApolloProvider client={client}>
+      <PaperProvider>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} /> */}
-          <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
-          {/* <Stack.Screen
-          name="index"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="home"
-          options={{
-            headerShown: false,
-          }}
-        /> */}
-        </Stack>
-      </ThemeProvider>
-    </PaperProvider>
+          <Stack
+            screenOptions={{
+              animation: "slide_from_right",
+            }}
+          >
+            <Stack.Screen
+              name="(onboarding)"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="index"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="home"
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack>
+        </ThemeProvider>
+      </PaperProvider>
+    </ApolloProvider>
   );
 }
