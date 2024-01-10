@@ -1,12 +1,14 @@
 import { GraphQLError } from "graphql";
-import jwt from "jsonwebtoken";
 
 import { dateScalar } from "./scalars.js";
 import User from "./models/user.js";
+import { generateToken } from "./utils/token.js";
+import { verify } from "./utils/google.js";
 
 const resolvers = {
   Date: dateScalar,
   Query: {
+    ping: () => "PONG",
     getMe: async (_, __, { userId }) => {
       if (!userId) {
         throw new GraphQLError("User is not authenticated", {
@@ -113,15 +115,7 @@ const resolvers = {
         password,
       });
 
-      const token = jwt.sign(
-        {
-          userId: user.id,
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "30d",
-        }
-      );
+      const token = generateToken(user);
 
       return {
         token,
@@ -140,26 +134,39 @@ const resolvers = {
         });
       }
 
-      const token = jwt.sign(
-        {
-          userId: user.id,
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "30d",
-        }
-      );
+      const token = generateToken(user);
 
       return {
         token,
       };
     },
-    loginWithGoogle: async () => {
-      return "";
+    loginWithGoogle: async (_, { idToken }) => {
+      const { email, name, picture } = await verify(idToken);
+      const user = await User.findOneAndUpdate(
+        {
+          email,
+        },
+        {
+          name,
+          email,
+          avatar: picture,
+          mode: "google",
+        },
+        {
+          upsert: true, // create if doesn't exists
+          new: true,
+        }
+      );
+
+      const token = generateToken(user);
+
+      return {
+        token,
+      };
     },
     updateUser: async (
       _,
-      { id, name, avatar, dateOfBirth, bio, gender },
+      { id, name, avatar, age, bio, gender },
       { userId }
     ) => {
       // User can update it's own account
@@ -177,7 +184,7 @@ const resolvers = {
         {
           name,
           avatar,
-          dateOfBirth,
+          age,
           bio,
           gender,
         },

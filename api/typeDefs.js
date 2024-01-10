@@ -27,7 +27,7 @@ const typeDefs = `#graphql
     name: String
     email: String
     avatar: String
-    age: Number
+    age: Int
     bio: String
     gender: String
     phaseOfLife: String
@@ -37,6 +37,7 @@ const typeDefs = `#graphql
   }
 
   type Query {
+    ping: String
     getMe: User
     getUserProfile(id: ID!): User
     getUserActivity: [Submission]

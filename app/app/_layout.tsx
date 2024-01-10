@@ -13,8 +13,10 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  gql,
+  createHttpLink,
 } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import * as SecureStore from "expo-secure-store";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -53,8 +55,27 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+const httpLink = createHttpLink({
+  uri: "http://127.0.0.1:4000/graphql",
+});
+
+const authLink = setContext(async (_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = await SecureStore.getItemAsync("TOKEN");
+  console.log({
+    token
+  })
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
 const client = new ApolloClient({
-  uri: "https://flyby-router-demo.herokuapp.com/",
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

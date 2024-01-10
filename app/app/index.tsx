@@ -12,6 +12,17 @@ import { Button } from "react-native-paper";
 import Colors from "../constants/Colors";
 import { useRouter } from "expo-router";
 
+import * as SecureStore from "expo-secure-store";
+import { useQuery, gql, useMutation } from "@apollo/client";
+
+const LOGIN_WITH_GOOGLE = gql`
+  mutation LoginWithGoogle($idToken: String!) {
+    loginWithGoogle(idToken: $idToken) {
+      token
+    }
+  }
+`;
+
 GoogleSignin.configure({
   scopes: [
     "https://www.googleapis.com/auth/userinfo.profile",
@@ -27,14 +38,37 @@ export default function IndexScreen() {
   const router = useRouter();
 
   const [isGoogleLoading, setIsGoogleLoading] = React.useState(false);
+  const [loginWithGoogle] = useMutation(LOGIN_WITH_GOOGLE);
+  const { data, error, loading } = useQuery(gql`
+    query Query {
+      ping
+    }
+  `);
+
+  console.log({ data, error: error?.stack, loading });
 
   const signIn = async () => {
     setIsGoogleLoading(true);
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log(JSON.stringify(userInfo, null, 2));
-      setIsGoogleLoading(false);
+      if (userInfo.idToken) {
+        console.log(userInfo.idToken);
+        loginWithGoogle({
+          variables: {
+            idToken: userInfo.idToken,
+          },
+          onCompleted: async (data) => {
+            console.log(data);
+            const { token } = data;
+            await SecureStore.setItemAsync("TOKEN", token);
+            setIsGoogleLoading(false);
+          },
+          onError(error) {
+            console.log(error);
+          },
+        });
+      }
     } catch (error: any) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
