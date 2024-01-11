@@ -6,7 +6,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 
 const OnboardingGender = () => {
   const [gender, setGender] = React.useState("male");
-  const { password, age } = useLocalSearchParams();
+  const { password, age, mode } = useLocalSearchParams();
 
   const router = useRouter();
 

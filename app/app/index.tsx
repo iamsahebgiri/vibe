@@ -39,13 +39,13 @@ export default function IndexScreen() {
 
   const [isGoogleLoading, setIsGoogleLoading] = React.useState(false);
   const [loginWithGoogle] = useMutation(LOGIN_WITH_GOOGLE);
-  const { data, error, loading } = useQuery(gql`
-    query Query {
-      ping
-    }
-  `);
+  // const { data, error, loading } = useQuery(gql`
+  //   query Query {
+  //     ping
+  //   }
+  // `);
 
-  console.log({ data, error: error?.stack, loading });
+  // console.log({ data, error: error?.message, loading });
 
   const signIn = async () => {
     setIsGoogleLoading(true);
@@ -53,16 +53,21 @@ export default function IndexScreen() {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       if (userInfo.idToken) {
-        console.log(userInfo.idToken);
+        // console.log(userInfo.idToken);
         loginWithGoogle({
           variables: {
             idToken: userInfo.idToken,
           },
           onCompleted: async (data) => {
-            console.log(data);
-            const { token } = data;
+            const { token } = data.loginWithGoogle;
             await SecureStore.setItemAsync("TOKEN", token);
             setIsGoogleLoading(false);
+            router.replace({
+              pathname: "/(onboarding)/age",
+              params: {
+                mode: "gooogle"
+              }
+            });
           },
           onError(error) {
             console.log(error);
@@ -80,6 +85,8 @@ export default function IndexScreen() {
         // some other error happened
       }
       console.log(error);
+      setIsGoogleLoading(false);
+    } finally {
       setIsGoogleLoading(false);
     }
   };

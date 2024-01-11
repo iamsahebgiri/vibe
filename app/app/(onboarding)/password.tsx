@@ -74,6 +74,7 @@ const OnboardingPassword = () => {
               pathname: "/(onboarding)/age",
               params: {
                 password,
+                mode: "email"
               },
             })
           }

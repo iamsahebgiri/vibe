@@ -3,10 +3,29 @@ import React from "react";
 import { TextInput, Text, Button, RadioButton } from "react-native-paper";
 import { View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { gql, useMutation } from "@apollo/client";
+
+const UPDATE_USER = gql`
+  mutation UpdateUser($age: Int, $gender: String, $phaseOfLife: String) {
+    updateUser(age: $age, gender: $gender, phaseOfLife: $phaseOfLife) {
+      id
+      name
+      email
+      avatar
+      age
+      bio
+      gender
+      phaseOfLife
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 const OnboardingPhaseOfLife = () => {
   const [phaseOfLife, setPhaseOfLife] = React.useState("bachelor-1");
-  const { password, age, gender } = useLocalSearchParams();
+  const { password, age, gender, mode } = useLocalSearchParams();
+  const [updateProfile, {loading}] = useMutation(UPDATE_USER);
 
   const router = useRouter();
 
@@ -69,10 +88,23 @@ const OnboardingPhaseOfLife = () => {
             height: 48,
             flexDirection: "row-reverse",
           }}
+          loading={loading}
           icon="arrow-right"
           onPress={() => {
-            console.log({ password, gender, age, phaseOfLife });
-            router.push("/home")
+            console.log({ password, gender, age, phaseOfLife, mode });
+            updateProfile({
+              variables: {
+                gender,
+                age: parseInt(age as string),
+                phaseOfLife,
+              },
+              onCompleted: (data) => {
+                router.replace("/home");
+              },
+              onError: (error) => {
+                console.log(error);
+              },
+            });
           }}
         >
           Submit

@@ -56,7 +56,7 @@ export default function RootLayout() {
 }
 
 const httpLink = createHttpLink({
-  uri: "http://127.0.0.1:4000/graphql",
+  uri: "http://192.168.1.8:4000/graphql",
 });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -76,6 +76,7 @@ const authLink = setContext(async (_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
+  // uri: "http://192.168.1.8:4000/graphql",
   cache: new InMemoryCache(),
 });
 

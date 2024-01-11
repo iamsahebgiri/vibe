@@ -166,27 +166,28 @@ const resolvers = {
     },
     updateUser: async (
       _,
-      { id, name, avatar, age, bio, gender },
+      { name, avatar, age, bio, gender, phaseOfLife },
       { userId }
     ) => {
       // User can update it's own account
-      if (userId !== id) {
+      if (!userId) {
         throw new GraphQLError("You can't perform this action", {
           extensions: {
-            code: "UNAUTHORIZED",
+            code: "UNAUTHENTICATED",
             http: { status: 401 },
           },
         });
       }
 
       const user = await User.findByIdAndUpdate(
-        id,
+        userId,
         {
           name,
           avatar,
           age,
           bio,
           gender,
+          phaseOfLife
         },
         { new: true } // returns updated document
       );

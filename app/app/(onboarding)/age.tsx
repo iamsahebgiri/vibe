@@ -9,8 +9,8 @@ import {
 } from "expo-router";
 
 const OnboardingAge = () => {
-  const [age, setAge] = React.useState("16");
-  const { password } = useLocalSearchParams();
+  const [age, setAge] = React.useState("21");
+  const { password, mode } = useLocalSearchParams();
 
   const router = useRouter();
 
@@ -65,7 +65,6 @@ const OnboardingAge = () => {
         </Button>
         <Button
           mode="contained"
-          disabled={password.length < 6}
           style={{
             borderRadius: 99,
           }}
@@ -77,6 +76,7 @@ const OnboardingAge = () => {
           onPress={() => router.push({
             pathname: "/(onboarding)/gender",
             params: {
+              mode,
               password,
               age
             },

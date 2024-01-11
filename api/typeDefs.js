@@ -56,7 +56,7 @@ const typeDefs = `#graphql
     login(email: String!, password: String!): AuthData
     loginWithGoogle(idToken: String!): AuthData
 
-    updateUser(id: ID!, name: String, avatar: String, dateOfBirth: Date, bio: String, gender: String): User
+    updateUser(name: String, avatar: String, age: Int, bio: String, gender: String, phaseOfLife: String): User
     deleteUser(id: ID!): User
 
     submitQuestion(questionId: ID!, to: ID!, option1: ID!, option2: ID!, option3: ID!): Submission
