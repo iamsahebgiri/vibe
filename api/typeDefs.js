@@ -5,8 +5,6 @@ const typeDefs = `#graphql
     id: ID
     text: String
     emoji: String
-    createdAt: String
-    updatedAt: String
   }
 
   type Submission {
@@ -43,7 +41,7 @@ const typeDefs = `#graphql
     getUserActivity: [Submission]
     getMyInbox: [Submission]
     getMyTopDrips: [Submission]
-    getNextQuestion: Question
+    getNextQuestion: [Question]
     getRandom4Options: [User]
   }
 

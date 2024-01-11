@@ -2,6 +2,7 @@ import { GraphQLError } from "graphql";
 
 import { dateScalar } from "./scalars.js";
 import User from "./models/user.js";
+import Question from "./models/question.js";
 import { generateToken } from "./utils/token.js";
 import { verify } from "./utils/google.js";
 
@@ -46,7 +47,7 @@ const resolvers = {
           },
         });
       }
-      const randomQuestion = await Question.aggregate([
+      const randomQuestions = await Question.aggregate([
         {
           $lookup: {
             from: "Submission",
@@ -57,7 +58,7 @@ const resolvers = {
                   $expr: {
                     $and: [
                       { $eq: ["$question", "$$questionId"] },
-                      { $eq: ["$from", id] },
+                      { $eq: ["$from", userId] },
                     ],
                   },
                 },
@@ -71,10 +72,15 @@ const resolvers = {
             answers: { $size: 0 }, // Filter out questions with no answers for the specific user
           },
         },
-        { $sample: { size: 1 } }, // Get a random question
+        { $sample: { size: 12 } }, // Get 12 random questions
+        {
+          $set: { id: "$_id" }, // add id field, workaround to rename _id to id
+        },
       ]);
 
-      return randomQuestion[0];
+      console.log(randomQuestions);
+
+      return randomQuestions;
     },
     getRandom4Options: async (_, __, { userId }) => {
       if (!userId) {
@@ -187,7 +193,7 @@ const resolvers = {
           age,
           bio,
           gender,
-          phaseOfLife
+          phaseOfLife,
         },
         { new: true } // returns updated document
       );

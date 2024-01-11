@@ -1,19 +1,27 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useQuery, gql } from "@apollo/client";
+import { useState } from "react";
+import { Button } from "react-native-paper";
 
-const GET_LOCATIONS = gql`
-  query GetLocations {
-    locations {
+const GET_NEXT_QUESTIONS = gql`
+  query GetNextQuestion {
+    getNextQuestion {
       id
+      text
+      emoji
+    }
+    getRandom4Options {
+      id
+      email
+      avatar
       name
-      description
-      photo
     }
   }
 `;
 
 export default function HomeScreen() {
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const { loading, error, data } = useQuery(GET_NEXT_QUESTIONS);
 
   if (loading)
     return (
@@ -29,6 +37,7 @@ export default function HomeScreen() {
       </View>
     );
 
+  const questions = data.getNextQuestion;
   console.log(data);
   return (
     <>
@@ -41,10 +50,19 @@ export default function HomeScreen() {
             justifyContent: "center",
           }}
         >
-          <Text style={styles.emoji}>😅</Text>
-          <Text style={styles.prompt}>
-            Shamelessly double/triple texts and still doesn't get a reply
-          </Text>
+          <Text style={styles.emoji}>{questions.at(currentIndex)?.emoji}</Text>
+          <Text style={styles.prompt}>{questions.at(currentIndex)?.text}</Text>
+          {currentIndex < 12 && (
+            <Button
+              onPress={() => {
+                if (currentIndex < 12) {
+                  setCurrentIndex((index) => index + 1);
+                }
+              }}
+            >
+              Next
+            </Button>
+          )}
         </View>
       </View>
     </>
