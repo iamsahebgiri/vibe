@@ -8,16 +8,10 @@ import { gql, useMutation } from "@apollo/client";
 const UPDATE_USER = gql`
   mutation UpdateUser($age: Int, $gender: String, $phaseOfLife: String) {
     updateUser(age: $age, gender: $gender, phaseOfLife: $phaseOfLife) {
-      id
-      name
-      email
-      avatar
       age
       bio
       gender
       phaseOfLife
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -25,7 +19,7 @@ const UPDATE_USER = gql`
 const OnboardingPhaseOfLife = () => {
   const [phaseOfLife, setPhaseOfLife] = React.useState("bachelor-1");
   const { password, age, gender, mode } = useLocalSearchParams();
-  const [updateProfile, {loading}] = useMutation(UPDATE_USER);
+  const [updateProfile, { loading }] = useMutation(UPDATE_USER);
 
   const router = useRouter();
 

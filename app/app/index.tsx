@@ -13,7 +13,7 @@ import Colors from "../constants/Colors";
 import { useRouter } from "expo-router";
 
 import * as SecureStore from "expo-secure-store";
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useQuery, gql, useMutation, useLazyQuery } from "@apollo/client";
 
 const LOGIN_WITH_GOOGLE = gql`
   mutation LoginWithGoogle($idToken: String!) {
@@ -39,11 +39,13 @@ export default function IndexScreen() {
 
   const [isGoogleLoading, setIsGoogleLoading] = React.useState(false);
   const [loginWithGoogle] = useMutation(LOGIN_WITH_GOOGLE);
-  // const { data, error, loading } = useQuery(gql`
-  //   query Query {
-  //     ping
-  //   }
-  // `);
+  const [getMe] = useLazyQuery(gql`
+    query GetMe {
+      getMe {
+        phaseOfLife
+      }
+    }
+  `);
 
   // console.log({ data, error: error?.message, loading });
 
@@ -53,7 +55,7 @@ export default function IndexScreen() {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       if (userInfo.idToken) {
-        // console.log(userInfo.idToken);
+        console.log("Got id token");
         loginWithGoogle({
           variables: {
             idToken: userInfo.idToken,
@@ -61,11 +63,29 @@ export default function IndexScreen() {
           onCompleted: async (data) => {
             const { token } = data.loginWithGoogle;
             await SecureStore.setItemAsync("TOKEN", token);
-            setIsGoogleLoading(false);
-            router.replace({
-              pathname: "/(onboarding)/age",
-              params: {
-                mode: "gooogle"
+            console.log("logged in token");
+
+            getMe({
+              onCompleted(userData) {
+                console.log(userData)
+                const { phaseOfLife } = userData.getMe;
+                console.log({
+                  phaseOfLife
+                })
+                if (phaseOfLife) {
+                  router.replace("/home");
+                } else {
+                  router.replace({
+                    pathname: "/(onboarding)/age",
+                    params: {
+                      mode: "gooogle",
+                    },
+                  });
+                }
+                setIsGoogleLoading(false);
+              },
+              onError(error) {
+                console.log(error)
               }
             });
           },

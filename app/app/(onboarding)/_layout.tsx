@@ -7,10 +7,10 @@ const OnboardingLayout = () => {
   }
   return (
     <Stack>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="password"
         options={options}
-      />
+      /> */}
       <Stack.Screen
         name="age"
         options={options}

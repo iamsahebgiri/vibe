@@ -7,6 +7,9 @@ import {
   useLocalSearchParams,
   useRouter,
 } from "expo-router";
+import { gql, useQuery } from "@apollo/client";
+
+
 
 const OnboardingAge = () => {
   const [age, setAge] = React.useState("21");
@@ -51,7 +54,7 @@ const OnboardingAge = () => {
       >
         <Button
           mode="outlined"
-          disabled={!router.canGoBack()}
+          disabled
           style={{
             borderRadius: 99,
           }}
@@ -59,7 +62,6 @@ const OnboardingAge = () => {
             height: 48,
           }}
           icon="arrow-left"
-          onPress={router.back}
         >
           Prev
         </Button>
