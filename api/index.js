@@ -40,7 +40,7 @@ async function main() {
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
             return decodedToken;
           } catch (error) {
-            console.error(error);
+            console.error(error.message);
           }
         }
 

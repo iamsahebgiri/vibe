@@ -14,9 +14,19 @@ import {
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
+  from,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 import * as SecureStore from "expo-secure-store";
+import { router } from "expo-router";
+
+import {
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from "@react-navigation/native";
+import { MD2DarkTheme, MD2LightTheme } from "react-native-paper";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -25,7 +35,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(onboarding)",
+  initialRouteName: "/",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -56,15 +66,29 @@ export default function RootLayout() {
 }
 
 const httpLink = createHttpLink({
-  uri: "http://192.168.1.8:4000/graphql",
+  uri: "http://192.168.1.3:4000/graphql",
+});
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path, extensions }) => {
+      switch (extensions.code) {
+        case "UNAUTHENTICATED":
+          console.log("UNAUTHENTICATED");
+          router.replace("/login");
+          break;
+      }
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      );
+    });
+  if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = await SecureStore.getItemAsync("TOKEN");
-  // console.log({
-  //   token
-  // })
+  console.log("found token");
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -75,8 +99,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  // uri: "http://192.168.1.8:4000/graphql",
+  link: from([errorLink, authLink.concat(httpLink)]),
   cache: new InMemoryCache(),
 });
 
@@ -95,17 +118,17 @@ function RootLayoutNav() {
             }}
           >
             <Stack.Screen
-              name="(onboarding)"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
               name="index"
               options={{
                 headerShown: false,
               }}
             />
             <Stack.Screen
-              name="home"
+              name="(onboarding)"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="login"
               options={{
                 headerShown: false,
               }}

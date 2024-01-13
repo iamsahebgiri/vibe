@@ -93,7 +93,7 @@ const OnboardingPhaseOfLife = () => {
                 phaseOfLife,
               },
               onCompleted: (data) => {
-                router.replace("/home");
+                router.replace("/");
               },
               onError: (error) => {
                 console.log(error);

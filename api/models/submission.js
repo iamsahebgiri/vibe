@@ -7,12 +7,12 @@ const submissionSchema = mongoose.Schema(
       ref: "Question",
       required: true,
     },
-    from: {
+    submitter: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    to: {
+    optionSelected: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

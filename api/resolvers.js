@@ -3,8 +3,10 @@ import { GraphQLError } from "graphql";
 import { dateScalar } from "./scalars.js";
 import User from "./models/user.js";
 import Question from "./models/question.js";
+import Submission from "./models/submission.js";
 import { generateToken } from "./utils/token.js";
 import { verify } from "./utils/google.js";
+import mongoose from "mongoose";
 
 const resolvers = {
   Date: dateScalar,
@@ -38,7 +40,7 @@ const resolvers = {
     },
     getUserActivity: () => "getUserActivity",
     getMyInbox: () => "getUserInbox",
-    getNextQuestion: async (_, __, { userId }) => {
+    getQuestions: async (_, __, { userId }) => {
       if (!userId) {
         throw new GraphQLError("User is not authenticated", {
           extensions: {
@@ -72,17 +74,15 @@ const resolvers = {
             answers: { $size: 0 }, // Filter out questions with no answers for the specific user
           },
         },
-        { $sample: { size: 12 } }, // Get 12 random questions
+        { $sample: { size: 2 } }, // Get 12 random questions
         {
           $set: { id: "$_id" }, // add id field, workaround to rename _id to id
         },
       ]);
 
-      console.log(randomQuestions);
-
       return randomQuestions;
     },
-    getRandom4Options: async (_, __, { userId }) => {
+    getOptions: async (_, __, { userId }) => {
       if (!userId) {
         throw new GraphQLError("User is not authenticated", {
           extensions: {
@@ -91,9 +91,11 @@ const resolvers = {
           },
         });
       }
+
       const randomUsers = await User.aggregate([
+        { $match: { _id: { $ne: new mongoose.Types.ObjectId(userId) } } },
         {
-          $sample: { size: 4 },
+          $sample: { size: 48 }, // selects 48 users
         },
         {
           $addFields: { id: "$_id" }, // add id field, workaround to rename _id to id
@@ -119,6 +121,7 @@ const resolvers = {
         name,
         email,
         password,
+        avatar: `https://api.dicebear.com/7.x/miniavs/svg?seed=${email}`,
       });
 
       const token = generateToken(user);
@@ -213,7 +216,29 @@ const resolvers = {
       return user;
     },
 
-    submitQuestion: () => {},
+    submitQuestion: async (
+      _,
+      { questionId, optionSelected, option1, option2, option3 },
+      { userId }
+    ) => {
+      if (!userId) {
+        throw new GraphQLError("User is not authenticated", {
+          extensions: {
+            code: "UNAUTHENTICATED",
+            http: { status: 401 },
+          },
+        });
+      }
+      const submissoin = await Submission.create({
+        question: questionId,
+        submitter: userId,
+        optionSelected,
+        option1,
+        option2,
+        option3,
+      });
+      return submissoin;
+    },
   },
 };
 

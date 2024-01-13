@@ -41,8 +41,9 @@ const typeDefs = `#graphql
     getUserActivity: [Submission]
     getMyInbox: [Submission]
     getMyTopDrips: [Submission]
-    getNextQuestion: [Question]
-    getRandom4Options: [User]
+
+    getQuestions: [Question]
+    getOptions: [User]
   }
 
   type AuthData {
@@ -57,7 +58,7 @@ const typeDefs = `#graphql
     updateUser(name: String, avatar: String, age: Int, bio: String, gender: String, phaseOfLife: String): User
     deleteUser(id: ID!): User
 
-    submitQuestion(questionId: ID!, to: ID!, option1: ID!, option2: ID!, option3: ID!): Submission
+    submitQuestion(questionId: ID!, optionSelected: ID!, option1: ID!, option2: ID!, option3: ID!): Submission
   }
 `;
 

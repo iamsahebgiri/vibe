@@ -39,7 +39,6 @@ const userSchema = mongoose.Schema(
     institution: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Institution",
-      required: true,
     },
     gender: {
       type: String,
