@@ -38,8 +38,44 @@ const resolvers = {
       }
       return user;
     },
-    getUserActivity: () => "getUserActivity",
-    getMyInbox: () => "getUserInbox",
+    getUserActivity: async (_, __, { userId }) => {
+      if (!userId) {
+        throw new GraphQLError("User is not authenticated", {
+          extensions: {
+            code: "UNAUTHENTICATED",
+            http: { status: 401 },
+          },
+        });
+      }
+      const submissions = await Submission.find()
+        .populate("question")
+        .populate("submitter")
+        .populate("optionSelected")
+        .populate("option1")
+        .populate("option2")
+        .populate("option3");
+      return submissions;
+    },
+    getMyInbox: async (_, __, { userId }) => {
+      if (!userId) {
+        throw new GraphQLError("User is not authenticated", {
+          extensions: {
+            code: "UNAUTHENTICATED",
+            http: { status: 401 },
+          },
+        });
+      }
+      const submissions = await Submission.find({
+        optionSelected: userId,
+      })
+        .populate("question")
+        .populate("submitter")
+        .populate("optionSelected")
+        .populate("option1")
+        .populate("option2")
+        .populate("option3");
+      return submissions;
+    },
     getQuestions: async (_, __, { userId }) => {
       if (!userId) {
         throw new GraphQLError("User is not authenticated", {
@@ -121,7 +157,7 @@ const resolvers = {
         name,
         email,
         password,
-        avatar: `https://api.dicebear.com/7.x/miniavs/svg?seed=${email}`,
+        avatar: `https://api.dicebear.com/7.x/miniavs/png?seed=${email}`,
       });
 
       const token = generateToken(user);

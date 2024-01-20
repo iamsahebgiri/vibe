@@ -66,7 +66,7 @@ export default function RootLayout() {
 }
 
 const httpLink = createHttpLink({
-  uri: "http://192.168.1.3:4000/graphql",
+  uri: "http://192.168.29.73:4000/graphql",
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {

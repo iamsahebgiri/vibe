@@ -10,8 +10,8 @@ const typeDefs = `#graphql
   type Submission {
     id: ID
     question: Question
-    from: User
-    to: User
+    submitter: User
+    optionSelected: User
     option1: User
     option2: User
     option3: User

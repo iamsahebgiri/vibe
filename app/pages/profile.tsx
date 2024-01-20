@@ -24,6 +24,7 @@ const GET_ME = gql`
     }
   }
 `;
+
 export default function ProfileScreen() {
   const router = useRouter();
   const { loading, error, data } = useQuery(GET_ME);
