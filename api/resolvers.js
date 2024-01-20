@@ -112,7 +112,7 @@ const resolvers = {
             answers: { $size: 0 }, // Filter out questions with no answers for the specific user
           },
         },
-        { $sample: { size: 2 } }, // Get 12 random questions
+        { $sample: { size: 12 } }, // Get 12 random questions
         {
           $set: { id: "$_id" }, // add id field, workaround to rename _id to id
         },

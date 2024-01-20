@@ -6,7 +6,7 @@ import {
   View
 } from "react-native";
 import { Appbar, Text } from "react-native-paper";
-import ActivityListItem from "../components/ListItem";
+import {ActivityListItem} from "../components/ListItem";
 
 const GET_USER_ACTIVITY = gql`
   query GetUserActivity {

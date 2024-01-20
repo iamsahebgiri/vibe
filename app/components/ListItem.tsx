@@ -7,7 +7,16 @@ function nth(n: number) {
   return ["st", "nd", "rd"][((((n + 90) % 100) - 10) % 10) - 1] || "th";
 }
 
-const ActivityListItem = ({
+const formatText = (gender: string, phaseOfLife: string) => {
+  if (!gender || !phaseOfLife) return "";
+
+  gender = gender.toLowerCase() === "male" ? "boy" : "girl";
+  let [course, year] = phaseOfLife.split("-");
+
+  return `From a ${gender} in ${year}${nth(+year)} pursuing ${course}`;
+};
+
+export const ActivityListItem = ({
   avatarSource,
   title,
   subtitle,
@@ -15,15 +24,6 @@ const ActivityListItem = ({
   gender,
   phaseOfLife,
 }: any) => {
-  const formatText = (gender: string, phaseOfLife: string) => {
-    if (!gender || !phaseOfLife) return "";
-
-    gender = gender.toLowerCase() === "male" ? "boy" : "girl";
-    let [course, year] = phaseOfLife.split("-");
-
-    return `From a ${gender} in ${year}${nth(+year)} pursuing ${course}`;
-  };
-
   const theme = useTheme();
   return (
     <View style={styles.container}>
@@ -62,6 +62,39 @@ const ActivityListItem = ({
   );
 };
 
+export const InboxListItem = ({ timestamp, gender, phaseOfLife }: any) => {
+  const theme = useTheme();
+
+  return (
+    <View style={styles.container}>
+      <Avatar.Image
+        size={42}
+        source={
+          gender?.toLowerCase() === "male"
+            ? require("./../assets/images/male.png")
+            : require("./../assets/images/female.png")
+        }
+      />
+
+      <View style={styles.textContainer}>
+        <Text
+          style={{
+            ...styles.subtitle,
+            color: theme.colors.onSecondaryContainer,
+          }}
+        >
+          {formatText(gender, phaseOfLife)}
+        </Text>
+      </View>
+      <Text
+        style={{ ...styles.timestamp, color: theme.colors.onSurfaceDisabled }}
+      >
+        {dayjs(timestamp).fromNow(true)}
+      </Text>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -89,5 +122,3 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
-
-export default ActivityListItem;

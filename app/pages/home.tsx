@@ -125,14 +125,14 @@ export default function HomeScreen() {
               ))}
             </RadioButton.Group>
             <View>
-              <Button
+              {/* <Button
                 onPress={() => {
                   refetch();
                   setCurrentIndex(0);
                 }}
               >
                 Refetch
-              </Button>
+              </Button> */}
               <Button
                 mode="contained"
                 onPress={() => {
