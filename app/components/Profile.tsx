@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
+import { Text } from "react-native-paper";
 
 const ProfileComponent = ({ profileData }: any) => {
   return (
@@ -42,7 +43,6 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 16,
-    color: "#555",
   },
   detail: {
     fontSize: 14,

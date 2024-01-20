@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useQuery, gql, useLazyQuery, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { Button, RadioButton } from "react-native-paper";
+import { Button, RadioButton, Text} from "react-native-paper";
 import LockedQuiz from "../components/LockedQuiz";
 
 const ONE_HR = 600;

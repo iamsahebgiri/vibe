@@ -14,7 +14,7 @@ import {
   statusCodes,
 } from "@react-native-google-signin/google-signin";
 import { gql, useApolloClient, useQuery } from "@apollo/client";
-import ProfileComponent from "../components/profile";
+import ProfileComponent from "../components/Profile";
 
 const GET_ME = gql`
   query GetMe {

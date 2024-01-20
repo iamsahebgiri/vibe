@@ -1,6 +1,7 @@
 import React, { useState, useEffect, PropsWithChildren } from "react";
-import { View, Text } from "react-native";
-
+import { View } from "react-native";
+import { Text } from "react-native-paper";
+import LottieView from "lottie-react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const COUNTDOWN_KEY = "@countdownEndTime";
@@ -69,13 +70,39 @@ const LockedQuiz = ({
   // Render the revealed component when the countdown reaches zero
   const isComponentVisible = timeRemaining === 0;
 
-  if (isComponentVisible) return children;
-  
-  return (
-    <View>
-      <Text>Come back after: {formatTime(timeRemaining)}</Text>
-    </View>
-  );
+  if (!isComponentVisible)
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text
+          variant="headlineLarge"
+          style={{
+            fontWeight: "bold",
+          }}
+        >
+          Play again
+        </Text>
+        <LottieView
+          style={{
+            height: 200,
+            width: 200,
+          }}
+          source={require("../assets/images/fire.json")}
+          autoPlay
+          loop
+        />
+        <Text variant="headlineSmall">
+          New Poll in {formatTime(timeRemaining)}
+        </Text>
+      </View>
+    );
+
+  return children;
 };
 
 // Helper function to format seconds into HH:mm:ss
@@ -84,10 +111,7 @@ const formatTime = (seconds: number) => {
   const minutes = Math.floor((seconds % 3600) / 60);
   const secs = seconds % 60;
 
-  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-    2,
-    "0"
-  )}:${String(secs).padStart(2, "0")}`;
+  return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 };
 
 export default LockedQuiz;
