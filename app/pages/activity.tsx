@@ -6,7 +6,7 @@ import {
   View
 } from "react-native";
 import { Appbar, Text } from "react-native-paper";
-import ListItem from "../components/ListItem";
+import ActivityListItem from "../components/ListItem";
 
 const GET_USER_ACTIVITY = gql`
   query GetUserActivity {
@@ -51,11 +51,13 @@ export default function ActivityScreen() {
                 <RefreshControl refreshing={loading} onRefresh={refetch} />
               }
               renderItem={({ item }) => (
-                <ListItem
+                <ActivityListItem
                   title={item.optionSelected.name}
                   subtitle={item.question.text}
                   timestamp={item.createdAt}
                   avatarSource={item.optionSelected.avatar}
+                  gender={item.submitter.gender}
+                  phaseOfLife={item.submitter.phaseOfLife}
                 />
 
               )}

@@ -3,7 +3,27 @@ import React from "react";
 import { Avatar, Text, useTheme } from "react-native-paper";
 import dayjs from "./../lib/dayjs";
 
-const ListItem = ({ avatarSource, title, subtitle, timestamp }: any) => {
+function nth(n: number) {
+  return ["st", "nd", "rd"][((((n + 90) % 100) - 10) % 10) - 1] || "th";
+}
+
+const ActivityListItem = ({
+  avatarSource,
+  title,
+  subtitle,
+  timestamp,
+  gender,
+  phaseOfLife,
+}: any) => {
+  const formatText = (gender: string, phaseOfLife: string) => {
+    if (!gender || !phaseOfLife) return "";
+
+    gender = gender.toLowerCase() === "male" ? "boy" : "girl";
+    let [course, year] = phaseOfLife.split("-");
+
+    return `From a ${gender} in ${year}${nth(+year)} pursuing ${course}`;
+  };
+
   const theme = useTheme();
   return (
     <View style={styles.container}>
@@ -18,12 +38,26 @@ const ListItem = ({ avatarSource, title, subtitle, timestamp }: any) => {
           {title}
         </Text>
         <Text
-          style={{ ...styles.subtitle, color: theme.colors.onSurfaceVariant }}
+          style={{
+            ...styles.subtitle,
+            color: theme.colors.onSecondaryContainer,
+          }}
         >
           {subtitle}
         </Text>
+        {gender && phaseOfLife ? (
+          <Text
+            style={{ ...styles.helper, color: theme.colors.onSurfaceVariant }}
+          >
+            {formatText(gender, phaseOfLife)}
+          </Text>
+        ) : null}
       </View>
-      <Text style={styles.timestamp}>{dayjs(timestamp).fromNow(true)}</Text>
+      <Text
+        style={{ ...styles.timestamp, color: theme.colors.onSurfaceDisabled }}
+      >
+        {dayjs(timestamp).fromNow(true)}
+      </Text>
     </View>
   );
 };
@@ -41,15 +75,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "900",
   },
   subtitle: {
     fontSize: 14,
+    fontWeight: "700",
+  },
+  helper: {
+    fontSize: 13,
+    marginTop: 4,
   },
   timestamp: {
     fontSize: 12,
-    color: "#888",
   },
 });
 
-export default ListItem;
+export default ActivityListItem;
