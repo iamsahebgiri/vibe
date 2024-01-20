@@ -48,6 +48,7 @@ const resolvers = {
         });
       }
       const submissions = await Submission.find()
+        .sort({ createdAt: "desc" })
         .populate("question")
         .populate("submitter")
         .populate("optionSelected")
@@ -68,6 +69,7 @@ const resolvers = {
       const submissions = await Submission.find({
         optionSelected: userId,
       })
+        .sort({ createdAt: "desc" })
         .populate("question")
         .populate("submitter")
         .populate("optionSelected")

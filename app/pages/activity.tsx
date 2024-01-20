@@ -1,6 +1,12 @@
-import { Platform, StyleSheet, Text, View, FlatList } from "react-native";
-import { Appbar, Avatar, List } from "react-native-paper";
 import { gql, useQuery } from "@apollo/client";
+import {
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  View
+} from "react-native";
+import { Appbar, Text } from "react-native-paper";
+import ListItem from "../components/ListItem";
 
 const GET_USER_ACTIVITY = gql`
   query GetUserActivity {
@@ -24,7 +30,7 @@ const GET_USER_ACTIVITY = gql`
 `;
 
 export default function ActivityScreen() {
-  const { loading, error, data } = useQuery(GET_USER_ACTIVITY);
+  const { loading, error, data, refetch } = useQuery(GET_USER_ACTIVITY);
   return (
     <>
       <Appbar.Header>
@@ -35,24 +41,23 @@ export default function ActivityScreen() {
         {!loading && data && data.getUserActivity.length > 0 && (
           <View
             style={{
-              paddingHorizontal: 12,
+              flex: 1,
+              flexDirection: "row",
             }}
           >
             <FlatList
               data={data.getUserActivity}
+              refreshControl={
+                <RefreshControl refreshing={loading} onRefresh={refetch} />
+              }
               renderItem={({ item }) => (
-                <List.Item
+                <ListItem
                   title={item.optionSelected.name}
-                  description={item.question.text}
-                  left={(props) => (
-                    <Avatar.Image
-                      size={42}
-                      source={{
-                        uri: item.optionSelected.avatar,
-                      }}
-                    />
-                  )}
+                  subtitle={item.question.text}
+                  timestamp={item.createdAt}
+                  avatarSource={item.optionSelected.avatar}
                 />
+
               )}
               keyExtractor={(item) => item.id}
             />
