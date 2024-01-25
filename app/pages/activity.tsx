@@ -3,10 +3,11 @@ import {
   FlatList,
   RefreshControl,
   StyleSheet,
-  View
+  View,
+  VirtualizedList,
 } from "react-native";
-import { Appbar, Text } from "react-native-paper";
-import {ActivityListItem} from "../components/ListItem";
+import { Appbar, Text, ActivityIndicator } from "react-native-paper";
+import { ActivityListItem } from "../components/ListItem";
 
 const GET_USER_ACTIVITY = gql`
   query GetUserActivity {
@@ -31,13 +32,14 @@ const GET_USER_ACTIVITY = gql`
 
 export default function ActivityScreen() {
   const { loading, error, data, refetch } = useQuery(GET_USER_ACTIVITY);
+
   return (
     <>
       <Appbar.Header>
         <Appbar.Content title="Activity" />
       </Appbar.Header>
       <View style={styles.container}>
-        {loading && <Text>Loading...</Text>}
+        {loading && <ActivityIndicator animating={true} />}
         {!loading && data && data.getUserActivity.length > 0 && (
           <View
             style={{
@@ -45,11 +47,13 @@ export default function ActivityScreen() {
               flexDirection: "row",
             }}
           >
-            <FlatList
-              data={data.getUserActivity}
+            <VirtualizedList
               refreshControl={
                 <RefreshControl refreshing={loading} onRefresh={refetch} />
               }
+              getItemCount={() => data.getUserActivity.length}
+              initialNumToRender={10}
+              getItem={(_, index) => data.getUserActivity.at(index)}
               renderItem={({ item }) => (
                 <ActivityListItem
                   title={item.optionSelected.name}
@@ -59,7 +63,6 @@ export default function ActivityScreen() {
                   gender={item.submitter.gender}
                   phaseOfLife={item.submitter.phaseOfLife}
                 />
-
               )}
               keyExtractor={(item) => item.id}
             />

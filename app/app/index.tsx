@@ -1,6 +1,4 @@
 import { Platform, StyleSheet } from 'react-native';
-
-import { View } from '../components/Themed';
 import { BottomNavigation, Text } from 'react-native-paper';
 import React from 'react';
 import ProfileScreen from '../pages/profile';

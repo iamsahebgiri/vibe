@@ -1,8 +1,14 @@
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View, Dimensions } from "react-native";
 import { useQuery, gql, useLazyQuery, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { Button, RadioButton, Text} from "react-native-paper";
+import {
+  ActivityIndicator,
+  Button,
+  RadioButton,
+  Text,
+} from "react-native-paper";
 import LockedQuiz from "../components/LockedQuiz";
+import Option from "../components/Option";
 
 const ONE_HR = 600;
 
@@ -75,7 +81,7 @@ export default function HomeScreen() {
   if (loading)
     return (
       <View style={styles.container}>
-        <Text>Loading....</Text>
+        <ActivityIndicator animating={true} />
       </View>
     );
 
@@ -88,95 +94,120 @@ export default function HomeScreen() {
 
   const questions = data.getQuestions;
 
+  console.log(options.at(0));
   return (
     <View style={styles.container}>
       <LockedQuiz
         timeRemaining={timeRemaining}
         setTimeRemaining={setTimeRemaining}
       >
-        <>
-          <Text>
-            {currentIndex + 1} / {questions.length}
-          </Text>
+        <SafeAreaView style={{
+          minWidth: Dimensions.get("screen").width,
+          paddingHorizontal: 12
+        }}>
           <View
             style={{
-              padding: 12,
               alignItems: "center",
-              gap: 12,
-              justifyContent: "center",
+              
             }}
           >
+            <Text>
+              {currentIndex + 1} / {questions.length}
+            </Text>
             <Text style={styles.emoji}>
               {questions.at(currentIndex)?.emoji}
             </Text>
             <Text style={styles.prompt}>
               {questions.at(currentIndex)?.text}
             </Text>
-            <RadioButton.Group
-              onValueChange={(value) => setSelectedOption(value)}
-              value={optionSelected}
-            >
-              {options.map((option: any, index) => (
-                <RadioButton.Item
-                  key={index}
-                  label={option.name}
-                  value={option.id}
-                />
+          </View>
+          <View
+            style={{
+              ...styles.grid,
+              marginVertical: 20,
+            }}
+          >
+            <View style={styles.row}>
+              {options.slice(0, 2).map((option) => (
+                <View key={option.id} style={styles.gridItem}>
+                  <Option
+                    isSelected={option.id === optionSelected}
+                    onSelected={() => setSelectedOption(option.id)}
+                    name={option.name}
+                    src={option.avatar}
+                  />
+                </View>
               ))}
-            </RadioButton.Group>
-            <View>
-              {/* <Button
-                onPress={() => {
-                  refetch();
-                  setCurrentIndex(0);
-                }}
-              >
-                Refetch
-              </Button> */}
-              <Button
-                mode="contained"
-                onPress={() => {
-                  const otherOptions = options.filter(
-                    (option) => option.id !== optionSelected
-                  );
-                  submitQuestion({
-                    variables: {
-                      questionId: data.getQuestions[currentIndex]?.id,
-                      optionSelected,
-                      option1: otherOptions.at(0).id,
-                      option2: otherOptions.at(1).id,
-                      option3: otherOptions.at(2).id,
-                    },
-                    onCompleted() {
-                      console.log(currentIndex);
-                      console.log(data.getQuestions.length);
-                      if (currentIndex === data.getQuestions.length - 1) {
-                        console.log("last questions");
-                        setTimeRemaining(ONE_HR);
-                        setSelectedOption("");
-                        setShuffleCount(3);
-                        setCurrentIndex(0);
-                        refetch();
-                      }
-                      if (currentIndex < data.getQuestions.length - 1) {
-                        setCurrentIndex((index) => index + 1);
-                        setShuffleCount(3);
-                        setSelectedOption("");
-                      }
-                    },
-                  });
-                }}
-                disabled={optionSelected === ""}
-                loading={submitting}
-              >
-                Next
-              </Button>
-              <Button onPress={handleShuffle} disabled={shuffleCount <= 0}>
-                Shuffle ({shuffleCount})
-              </Button>
+            </View>
+            <View style={styles.row}>
+              {options.slice(2, 4).map((option) => (
+                <View key={option.id} style={styles.gridItem}>
+                  <Option
+                    isSelected={option.id === optionSelected}
+                    onSelected={() => setSelectedOption(option.id)}
+                    name={option.name}
+                    src={option.avatar}
+                  />
+                </View>
+              ))}
             </View>
           </View>
-        </>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignSelf: "stretch",
+              marginTop: 32,
+            }}
+          >
+            <Button
+              mode="contained-tonal"
+              onPress={handleShuffle}
+              disabled={shuffleCount <= 0}
+            >
+              Shuffle ({shuffleCount})
+            </Button>
+
+            <Button
+              mode="contained"
+              onPress={() => {
+                const otherOptions = options.filter(
+                  (option) => option.id !== optionSelected
+                );
+                submitQuestion({
+                  variables: {
+                    questionId: data.getQuestions[currentIndex]?.id,
+                    optionSelected,
+                    option1: otherOptions.at(0).id,
+                    option2: otherOptions.at(1).id,
+                    option3: otherOptions.at(2).id,
+                  },
+                  onCompleted() {
+                    console.log(currentIndex);
+                    console.log(data.getQuestions.length);
+                    if (currentIndex === data.getQuestions.length - 1) {
+                      console.log("last questions");
+                      setTimeRemaining(ONE_HR);
+                      setSelectedOption("");
+                      setShuffleCount(3);
+                      setCurrentIndex(0);
+                      refetch();
+                    }
+                    if (currentIndex < data.getQuestions.length - 1) {
+                      setCurrentIndex((index) => index + 1);
+                      setShuffleCount(3);
+                      setSelectedOption("");
+                    }
+                  },
+                });
+              }}
+              disabled={optionSelected === ""}
+              loading={submitting}
+            >
+              Continue
+            </Button>
+          </View>
+        </SafeAreaView>
       </LockedQuiz>
     </View>
   );
@@ -187,6 +218,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    // backgroundColor: "red",
   },
   prompt: {
     fontSize: 24,
@@ -195,5 +227,21 @@ const styles = StyleSheet.create({
   },
   emoji: {
     fontSize: 72,
+  },
+  grid: {
+    // flex: 1,
+    alignSelf: "stretch",
+    flexDirection: "row", // Rows
+    justifyContent: "space-between", // Evenly space rows
+    gap: 5,
+  },
+  row: {
+    flex: 1,
+    flexDirection: "column", // Columns
+    justifyContent: "space-between", // Evenly space columns
+    gap: 5,
+  },
+  gridItem: {
+    borderRadius: 10,
   },
 });

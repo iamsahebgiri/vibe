@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
-import { Appbar, Text } from "react-native-paper";
+import { ActivityIndicator, Appbar, Text } from "react-native-paper";
 import { InboxListItem } from "../components/ListItem";
 
 const GET_MY_INBOX = gql`
@@ -25,7 +25,7 @@ export default function InboxScreen() {
         <Appbar.Content title="Inbox" />
       </Appbar.Header>
       <View style={styles.container}>
-        {loading && <Text>Loading...</Text>}
+        {loading && <ActivityIndicator animating={true} />}
         {!loading && data && data.getMyInbox.length === 0 && (
           <Text>Nothing in here</Text>
         )}
