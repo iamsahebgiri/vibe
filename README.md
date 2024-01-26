@@ -1,7 +1,7 @@
 
 
 - [x] Webpack
-- [ ] Eslint
+- [x] Eslint
 - [ ] PWA
 - [ ] Styled Components
 - [x] React hooks
@@ -10,7 +10,7 @@
 - [x] JWT
 - [ ] SSR
 - [x] Expo
-- [ ] lottie
+- [x] lottie
 - [x] React Native
 - [ ] Dynamic events
 
@@ -20,11 +20,11 @@ Onboarding flow
 - [x] Setup Apollo GraphQL
 - [x] Do onboarding form (register/logout)
 - [x] Display questions
-- [ ] Add Lottie to animate to come back after an hour
+- [x] Add Lottie to animate to come back after an hour
 
-- [ ] Activity where all submissions are shown with pagination/ infinite scrolling
-- [ ] Inbox (GraphQL Subscription)
-- [ ] Profile
+- [x] Activity where all submissions are shown with pagination/ infinite scrolling
+- [x] Inbox (GraphQL Subscription)
+- [x] Profile
 
 DO NOT HANDLE EDGE CASES NOW
 BUILD THE FUNCTIONALITY FIRST

@@ -1,22 +1,22 @@
-import { GraphQLError } from "graphql";
+import { GraphQLError } from 'graphql';
 
-import { dateScalar } from "./scalars.js";
-import User from "./models/user.js";
-import Question from "./models/question.js";
-import Submission from "./models/submission.js";
-import { generateToken } from "./utils/token.js";
-import { verify } from "./utils/google.js";
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import { dateScalar } from './scalars.js';
+import User from './models/user.js';
+import Question from './models/question.js';
+import Submission from './models/submission.js';
+import { generateToken } from './utils/token.js';
+import { verify } from './utils/google.js';
 
 const resolvers = {
   Date: dateScalar,
   Query: {
-    ping: () => "PONG",
+    ping: () => 'PONG',
     getMe: async (_, __, { userId }) => {
       if (!userId) {
-        throw new GraphQLError("User is not authenticated", {
+        throw new GraphQLError('User is not authenticated', {
           extensions: {
-            code: "UNAUTHENTICATED",
+            code: 'UNAUTHENTICATED',
             http: { status: 401 },
           },
         });
@@ -29,7 +29,7 @@ const resolvers = {
       if (!user) {
         throw new GraphQLError("User doesn't exists ", {
           extensions: {
-            code: "BAD_REQUEST",
+            code: 'BAD_REQUEST',
             http: {
               status: 401,
             },
@@ -40,28 +40,28 @@ const resolvers = {
     },
     getUserActivity: async (_, __, { userId }) => {
       if (!userId) {
-        throw new GraphQLError("User is not authenticated", {
+        throw new GraphQLError('User is not authenticated', {
           extensions: {
-            code: "UNAUTHENTICATED",
+            code: 'UNAUTHENTICATED',
             http: { status: 401 },
           },
         });
       }
       const submissions = await Submission.find()
-        .sort({ createdAt: "desc" })
-        .populate("question")
-        .populate("submitter")
-        .populate("optionSelected")
-        .populate("option1")
-        .populate("option2")
-        .populate("option3");
+        .sort({ createdAt: 'desc' })
+        .populate('question')
+        .populate('submitter')
+        .populate('optionSelected')
+        .populate('option1')
+        .populate('option2')
+        .populate('option3');
       return submissions;
     },
     getMyInbox: async (_, __, { userId }) => {
       if (!userId) {
-        throw new GraphQLError("User is not authenticated", {
+        throw new GraphQLError('User is not authenticated', {
           extensions: {
-            code: "UNAUTHENTICATED",
+            code: 'UNAUTHENTICATED',
             http: { status: 401 },
           },
         });
@@ -69,20 +69,20 @@ const resolvers = {
       const submissions = await Submission.find({
         optionSelected: userId,
       })
-        .sort({ createdAt: "desc" })
-        .populate("question")
-        .populate("submitter")
-        .populate("optionSelected")
-        .populate("option1")
-        .populate("option2")
-        .populate("option3");
+        .sort({ createdAt: 'desc' })
+        .populate('question')
+        .populate('submitter')
+        .populate('optionSelected')
+        .populate('option1')
+        .populate('option2')
+        .populate('option3');
       return submissions;
     },
     getQuestions: async (_, __, { userId }) => {
       if (!userId) {
-        throw new GraphQLError("User is not authenticated", {
+        throw new GraphQLError('User is not authenticated', {
           extensions: {
-            code: "UNAUTHENTICATED",
+            code: 'UNAUTHENTICATED',
             http: { status: 401 },
           },
         });
@@ -90,21 +90,21 @@ const resolvers = {
       const randomQuestions = await Question.aggregate([
         {
           $lookup: {
-            from: "Submission",
-            let: { questionId: "$_id" },
+            from: 'Submission',
+            let: { questionId: '$_id' },
             pipeline: [
               {
                 $match: {
                   $expr: {
                     $and: [
-                      { $eq: ["$question", "$$questionId"] },
-                      { $eq: ["$from", userId] },
+                      { $eq: ['$question', '$$questionId'] },
+                      { $eq: ['$from', userId] },
                     ],
                   },
                 },
               },
             ],
-            as: "answers",
+            as: 'answers',
           },
         },
         {
@@ -114,7 +114,7 @@ const resolvers = {
         },
         { $sample: { size: 12 } }, // Get 12 random questions
         {
-          $set: { id: "$_id" }, // add id field, workaround to rename _id to id
+          $set: { id: '$_id' }, // add id field, workaround to rename _id to id
         },
       ]);
 
@@ -122,9 +122,9 @@ const resolvers = {
     },
     getOptions: async (_, __, { userId }) => {
       if (!userId) {
-        throw new GraphQLError("User is not authenticated", {
+        throw new GraphQLError('User is not authenticated', {
           extensions: {
-            code: "UNAUTHENTICATED",
+            code: 'UNAUTHENTICATED',
             http: { status: 401 },
           },
         });
@@ -136,7 +136,7 @@ const resolvers = {
           $sample: { size: 48 }, // selects 48 users
         },
         {
-          $addFields: { id: "$_id" }, // add id field, workaround to rename _id to id
+          $addFields: { id: '$_id' }, // add id field, workaround to rename _id to id
         },
       ]);
       return randomUsers;
@@ -145,10 +145,10 @@ const resolvers = {
   Mutation: {
     register: async (_, { name, email, password }) => {
       if (await User.isEmailTaken(email)) {
-        throw new GraphQLError("Email already exists", {
+        throw new GraphQLError('Email already exists', {
           extensions: {
-            code: "BAD_USER_INPUT",
-            argumentName: "email",
+            code: 'BAD_USER_INPUT',
+            argumentName: 'email',
             http: {
               status: 409,
             },
@@ -171,9 +171,9 @@ const resolvers = {
     login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user || !(await user.isPasswordMatch(password))) {
-        throw new GraphQLError("Incorrect email or password", {
+        throw new GraphQLError('Incorrect email or password', {
           extensions: {
-            code: "BAD_REQUEST",
+            code: 'BAD_REQUEST',
             http: {
               status: 401,
             },
@@ -197,12 +197,12 @@ const resolvers = {
           name,
           email,
           avatar: picture,
-          mode: "google",
+          mode: 'google',
         },
         {
           upsert: true, // create if doesn't exists
           new: true,
-        }
+        },
       );
 
       const token = generateToken(user);
@@ -213,14 +213,16 @@ const resolvers = {
     },
     updateUser: async (
       _,
-      { name, avatar, age, bio, gender, phaseOfLife },
-      { userId }
+      {
+        name, avatar, age, bio, gender, phaseOfLife,
+      },
+      { userId },
     ) => {
       // User can update it's own account
       if (!userId) {
         throw new GraphQLError("You can't perform this action", {
           extensions: {
-            code: "UNAUTHENTICATED",
+            code: 'UNAUTHENTICATED',
             http: { status: 401 },
           },
         });
@@ -236,7 +238,7 @@ const resolvers = {
           gender,
           phaseOfLife,
         },
-        { new: true } // returns updated document
+        { new: true }, // returns updated document
       );
       return user;
     },
@@ -245,7 +247,7 @@ const resolvers = {
       if (userId !== id) {
         throw new GraphQLError("You can't perform this action", {
           extensions: {
-            code: "UNAUTHORIZED",
+            code: 'UNAUTHORIZED',
             http: { status: 401 },
           },
         });
@@ -256,13 +258,15 @@ const resolvers = {
 
     submitQuestion: async (
       _,
-      { questionId, optionSelected, option1, option2, option3 },
-      { userId }
+      {
+        questionId, optionSelected, option1, option2, option3,
+      },
+      { userId },
     ) => {
       if (!userId) {
-        throw new GraphQLError("User is not authenticated", {
+        throw new GraphQLError('User is not authenticated', {
           extensions: {
-            code: "UNAUTHENTICATED",
+            code: 'UNAUTHENTICATED',
             http: { status: 401 },
           },
         });

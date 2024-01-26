@@ -15,7 +15,7 @@ const questionSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 /**

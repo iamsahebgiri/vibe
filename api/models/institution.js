@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const institutionSchema = mongoose.Schema(
   {
@@ -25,12 +25,12 @@ const institutionSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 /**
  * @typedef Institution
  */
-const Institution = mongoose.model("Institution", institutionSchema);
+const Institution = mongoose.model('Institution', institutionSchema);
 
 export default Institution;
