@@ -3,17 +3,15 @@
 - [x] Webpack
 - [x] Eslint
 - [ ] PWA
-- [ ] Styled Components
+- [x] Styled Components
 - [x] React hooks
 - [x] graphQL
 - [x] Express
 - [x] JWT
-- [ ] SSR
+- [x] SSR
 - [x] Expo
 - [x] lottie
 - [x] React Native
-- [ ] Dynamic events
-
 
 Onboarding flow
 
