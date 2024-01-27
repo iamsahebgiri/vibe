@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
@@ -57,17 +58,22 @@ const userSchema = mongoose.Schema(
   },
 );
 
-userSchema.statics.isEmailTaken = async (email, excludeUserId) => {
-  const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
-  return !!user;
+userSchema.statics.isEmailTaken = async function (email) {
+  try {
+    const user = await this.findOne({ email });
+    return !!user;
+  } catch (error) {
+    console.log(error);
+  }
+  return true;
 };
 
-userSchema.methods.isPasswordMatch = async (password) => {
+userSchema.methods.isPasswordMatch = async function (password) {
   const user = this;
   return bcrypt.compare(password, user.password);
 };
 
-userSchema.pre('save', async (next) => {
+userSchema.pre('save', async function (next) {
   const user = this;
   if (user.isModified('password')) {
     user.password = await bcrypt.hash(user.password, 8);

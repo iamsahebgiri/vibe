@@ -78,6 +78,24 @@ const resolvers = {
         .populate('option3');
       return submissions;
     },
+    getMyTopDrips: async (_, __, { userId }) => {
+      if (!userId) {
+        throw new GraphQLError('User is not authenticated', {
+          extensions: {
+            code: 'UNAUTHENTICATED',
+            http: { status: 401 },
+          },
+        });
+      }
+      // TODO: query is not right but just works
+      const submissions = await Submission.find({
+        optionSelected: userId,
+      })
+        .sort({ createdAt: 'desc' })
+        .populate('question')
+        .limit(5);
+      return submissions;
+    },
     getQuestions: async (_, __, { userId }) => {
       if (!userId) {
         throw new GraphQLError('User is not authenticated', {
@@ -161,6 +179,8 @@ const resolvers = {
         password,
         avatar: `https://api.dicebear.com/7.x/miniavs/png?seed=${email}`,
       });
+
+      console.log(user);
 
       const token = generateToken(user);
 

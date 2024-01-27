@@ -1,11 +1,13 @@
-import { readFileSync } from 'fs';
+import fs from 'fs';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 
 import Question from '../models/question.js';
 import Institution from '../models/institution.js';
 
-const questionsData = JSON.parse(readFileSync('./prompts.json'));
+const loadJSON = (path) => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
+
+const questionsData = loadJSON('./prompts.json');
 
 async function seedDatabase() {
   await mongoose.connect(process.env.DB_URL);
