@@ -12,6 +12,8 @@ import {
   Appbar,
   Button,
   Dialog,
+  Divider,
+  Menu,
   Portal,
   Text,
 } from "react-native-paper";
@@ -22,6 +24,7 @@ import {
 import { gql, useApolloClient, useQuery } from "@apollo/client";
 import ProfileComponent from "../components/Profile";
 import { useState } from "react";
+import TopDrips from "../components/TopDrips";
 
 const GET_ME = gql`
   query GetMe {
@@ -42,9 +45,12 @@ const GET_ME = gql`
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const { loading, error, data, refetch } = useQuery(GET_ME);
+  const { loading, data, refetch } = useQuery(GET_ME, {
+    fetchPolicy: "cache-and-network",
+  });
 
   const [visible, setVisible] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const showDialog = () => setVisible(true);
 
@@ -52,12 +58,44 @@ export default function ProfileScreen() {
 
   const client = useApolloClient();
 
+  const signOut = async () => {
+    await SecureStore.deleteItemAsync("TOKEN");
+    await GoogleSignin.signOut();
+    client.clearStore();
+    router.replace("/login");
+  };
+
   return (
     <>
       <Appbar.Header>
         <Appbar.Content title="Profile" />
-        <Appbar.Action icon="cog" onPress={showDialog} />
+        <Menu
+          visible={isMenuOpen}
+          onDismiss={() => setMenuOpen(false)}
+          anchor={
+            <Appbar.Action
+              icon="dots-vertical"
+              onPress={() => setMenuOpen(true)}
+            />
+          }
+        >
+          <Menu.Item
+            onPress={() => {
+              router.push("/(onboarding)/age");
+            }}
+            title="Edit Profile"
+          />
+          <Divider />
+          <Menu.Item
+            onPress={() => {
+              showDialog();
+              setMenuOpen(false);
+            }}
+            title="Log out"
+          />
+        </Menu>
       </Appbar.Header>
+
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Title>Log out</Dialog.Title>
@@ -66,16 +104,7 @@ export default function ProfileScreen() {
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDialog}>Cancel</Button>
-            <Button
-              onPress={async () => {
-                await SecureStore.deleteItemAsync("TOKEN");
-                await GoogleSignin.signOut();
-                client.clearStore();
-                router.replace("/login");
-              }}
-            >
-              Sign out
-            </Button>
+            <Button onPress={signOut}>Sign out</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
@@ -88,6 +117,7 @@ export default function ProfileScreen() {
             }
           >
             <ProfileComponent profileData={data.getMe} />
+            <TopDrips />
           </ScrollView>
         )}
       </View>

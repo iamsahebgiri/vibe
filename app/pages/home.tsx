@@ -93,8 +93,7 @@ export default function HomeScreen() {
     );
 
   const questions = data.getQuestions;
-
-  console.log(options.at(0));
+  
   return (
     <View style={styles.container}>
       <LockedQuiz

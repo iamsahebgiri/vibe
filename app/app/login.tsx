@@ -63,15 +63,14 @@ export default function IndexScreen() {
           onCompleted: async (data) => {
             const { token } = data.loginWithGoogle;
             await SecureStore.setItemAsync("TOKEN", token);
-            console.log("logged in token");
 
             getMe({
               onCompleted(userData) {
-                console.log(userData)
+                console.log(userData);
                 const { phaseOfLife } = userData.getMe;
                 console.log({
-                  phaseOfLife
-                })
+                  phaseOfLife,
+                });
                 if (phaseOfLife) {
                   router.replace("/");
                 } else {
@@ -85,12 +84,12 @@ export default function IndexScreen() {
                 setIsGoogleLoading(false);
               },
               onError(error) {
-                console.log(error)
-              }
+                console.log(error);
+              },
             });
           },
           onError(error) {
-            console.log("couldn't log in with google")
+            console.log("couldn't log in with google");
             console.log(error);
           },
         });
@@ -178,19 +177,30 @@ export default function IndexScreen() {
             Continue with Google
           </Button>
           <Button
-            mode="elevated"
+            mode="contained-tonal"
             style={{
               borderRadius: 99,
             }}
             contentStyle={{
               height: 48,
             }}
-            onPress={() => router.push("/")}
+            onPress={() => router.push("/(onboarding)/register")}
           >
-            Continue with email
+            Register with email
+          </Button>
+          <Button
+            style={{
+              borderRadius: 99,
+            }}
+            contentStyle={{
+              height: 48,
+            }}
+            onPress={() => router.push("/(onboarding)/login-with-email")}
+          >
+            Login with email
           </Button>
         </View>
-        <View
+        {/* <View
           style={{
             marginTop: 20,
             flexDirection: "row",
@@ -215,7 +225,7 @@ export default function IndexScreen() {
               Terms of service
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </View>
   );

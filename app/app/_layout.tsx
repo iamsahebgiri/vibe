@@ -21,12 +21,7 @@ import { onError } from "@apollo/client/link/error";
 import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
 
-import {
-  NavigationContainer,
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme,
-} from "@react-navigation/native";
-import { MD2DarkTheme, MD2LightTheme } from "react-native-paper";
+import { MD3DarkTheme, MD3LightTheme } from "react-native-paper";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -66,7 +61,7 @@ export default function RootLayout() {
 }
 
 const httpLink = createHttpLink({
-  uri: "http://192.168.228.233:4000/graphql",
+  uri: "https://vibe-api-axoy.onrender.com/graphql",
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -88,7 +83,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = await SecureStore.getItemAsync("TOKEN");
-  console.log("found token");
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -102,6 +96,7 @@ const client = new ApolloClient({
   link: from([errorLink, authLink.concat(httpLink)]),
   cache: new InMemoryCache(),
 });
+
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();

@@ -1,12 +1,23 @@
 import { gql, useQuery } from "@apollo/client";
-import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
-import { ActivityIndicator, Appbar, Text } from "react-native-paper";
+import { FlatList, RefreshControl, StyleSheet, View, VirtualizedList } from "react-native";
+import {
+  ActivityIndicator,
+  Appbar,
+  List,
+  Portal,
+  Snackbar,
+  Text,
+} from "react-native-paper";
 import { InboxListItem } from "../components/ListItem";
+import { useState } from "react";
 
 const GET_MY_INBOX = gql`
   query GetInbox {
     getMyInbox {
       id
+      question {
+        text
+      }
       submitter {
         gender
         phaseOfLife
@@ -17,7 +28,12 @@ const GET_MY_INBOX = gql`
 `;
 
 export default function InboxScreen() {
-  const { loading, error, data, refetch } = useQuery(GET_MY_INBOX);
+  const [errorVisible, setErrorVisible] = useState(false);
+  const { loading, data, refetch } = useQuery(GET_MY_INBOX, {
+    onError: () => {
+      setErrorVisible(true);
+    },
+  });
 
   return (
     <>
@@ -36,22 +52,38 @@ export default function InboxScreen() {
               flexDirection: "row",
             }}
           >
-            <FlatList
-              data={data.getMyInbox}
+            <VirtualizedList
               refreshControl={
                 <RefreshControl refreshing={loading} onRefresh={refetch} />
               }
+              getItemCount={() => data.getMyInbox.length}
+              initialNumToRender={10}
+              getItem={(_, index) => data.getMyInbox.at(index)}
               renderItem={({ item }) => (
                 <InboxListItem
                   timestamp={item.createdAt}
                   gender={item.submitter.gender}
                   phaseOfLife={item.submitter.phaseOfLife}
+                  description={item.question.text}
                 />
               )}
               keyExtractor={(item) => item.id}
             />
           </View>
         )}
+        <Portal>
+          <Snackbar
+            visible={errorVisible}
+            onDismiss={() => {
+              setErrorVisible(false);
+            }}
+            action={{
+              label: "Close",
+            }}
+          >
+            Error fetching top drips
+          </Snackbar>
+        </Portal>
       </View>
     </>
   );

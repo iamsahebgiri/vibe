@@ -7,9 +7,6 @@ import {
   useLocalSearchParams,
   useRouter,
 } from "expo-router";
-import { gql, useQuery } from "@apollo/client";
-
-
 
 const OnboardingAge = () => {
   const [age, setAge] = React.useState("21");
@@ -33,7 +30,8 @@ const OnboardingAge = () => {
             marginTop: 6,
           }}
         >
-         Your age helps us customize content and features that suit different age groups.
+          Your age helps us customize content and features that suit different
+          age groups.
         </Text>
         <TextInput
           style={{
@@ -75,14 +73,16 @@ const OnboardingAge = () => {
             flexDirection: "row-reverse",
           }}
           icon="arrow-right"
-          onPress={() => router.push({
-            pathname: "/(onboarding)/gender",
-            params: {
-              mode,
-              password,
-              age
-            },
-          })}
+          onPress={() =>
+            router.push({
+              pathname: "/(onboarding)/gender",
+              params: {
+                mode,
+                password,
+                age,
+              },
+            })
+          }
         >
           Next
         </Button>

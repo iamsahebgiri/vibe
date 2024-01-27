@@ -30,17 +30,12 @@ const OnboardingGender = () => {
           Understanding our users helps us tailor the app experience.
         </Text>
         <RadioButton.Group
-          onValueChange={(newValue) => setGender(newValue)}
-          value={gender}
+           onValueChange={(newValue) => setGender(newValue)}
+           value={gender}
         >
-          <View>
-            <Text>Male</Text>
-            <RadioButton value="male" />
-          </View>
-          <View>
-            <Text>Female</Text>
-            <RadioButton value="female" />
-          </View>
+          <RadioButton.Item label="Male" value="male" />
+          <RadioButton.Item label="Female" value="female" />
+          <RadioButton.Item label="Other" value="other" />
         </RadioButton.Group>
       </View>
 

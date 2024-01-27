@@ -6,8 +6,15 @@ import {
   View,
   VirtualizedList,
 } from "react-native";
-import { Appbar, Text, ActivityIndicator } from "react-native-paper";
+import {
+  Appbar,
+  Text,
+  ActivityIndicator,
+  Portal,
+  Snackbar,
+} from "react-native-paper";
 import { ActivityListItem } from "../components/ListItem";
+import { useState } from "react";
 
 const GET_USER_ACTIVITY = gql`
   query GetUserActivity {
@@ -31,7 +38,12 @@ const GET_USER_ACTIVITY = gql`
 `;
 
 export default function ActivityScreen() {
-  const { loading, error, data, refetch } = useQuery(GET_USER_ACTIVITY);
+  const [errorVisible, setErrorVisible] = useState(false);
+  const { loading, data, refetch } = useQuery(GET_USER_ACTIVITY, {
+    onError: () => {
+      setErrorVisible(true);
+    },
+  });
 
   return (
     <>
@@ -40,6 +52,9 @@ export default function ActivityScreen() {
       </Appbar.Header>
       <View style={styles.container}>
         {loading && <ActivityIndicator animating={true} />}
+        {!loading && data && data.getUserActivity.length === 0 && (
+          <Text>Nothing in here</Text>
+        )}
         {!loading && data && data.getUserActivity.length > 0 && (
           <View
             style={{
@@ -68,6 +83,19 @@ export default function ActivityScreen() {
             />
           </View>
         )}
+        <Portal>
+          <Snackbar
+            visible={errorVisible}
+            onDismiss={() => {
+              setErrorVisible(false);
+            }}
+            action={{
+              label: "Close",
+            }}
+          >
+            Error fetching activity
+          </Snackbar>
+        </Portal>
       </View>
     </>
   );
